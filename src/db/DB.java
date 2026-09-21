@@ -1,8 +1,8 @@
 package db;
 
-import java.io.InputStream;
 import java.sql.*;
-import java.util.Properties;
+import Exception.DbException;
+
 
 public class DB {
 
