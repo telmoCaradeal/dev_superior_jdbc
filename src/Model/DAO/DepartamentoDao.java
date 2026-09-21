@@ -1,10 +1,10 @@
-package Model.Entites.DAO;
+package Model.DAO;
 
-import Model.Entites.Entites.Departamento;
+import Model.Entites.Departamento;
 
 import java.util.List;
 
-public interface DepartamentoDAO {
+public interface DepartamentoDao {
 
     void insert(Departamento departamento);
     void update(Departamento departamento);

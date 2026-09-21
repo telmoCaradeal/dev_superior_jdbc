@@ -1,4 +1,4 @@
-package Model.Entites.Entites;
+package Model.Entites;
 
 import java.io.Serializable;
 import java.util.Objects;

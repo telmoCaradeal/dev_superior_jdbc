@@ -1,4 +1,4 @@
-package Model.Entites.Entites;
+package Model.Entites;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -78,6 +78,14 @@ public class Vendedor implements Serializable {
 
     public void setSalario(Double salario) {
         Salario = salario;
+    }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
 
     @Override
