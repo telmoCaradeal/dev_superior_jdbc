@@ -58,9 +58,9 @@ public class VendedorDaoJdbc implements VendedorDao {
             if (rs.next()) {
                 Departamento dep = instanciaDepartamento(rs);
 
-                Vendedor vendedor = instanciaVendedor(rs, dep);
+                Vendedor vendedorID = instanciaVendedor(rs, dep);
 
-                return vendedor;
+                return vendedorID;
 
             } else {
                 return null;

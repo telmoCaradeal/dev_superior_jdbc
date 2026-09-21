@@ -4,10 +4,7 @@ import Model.DAO.DaoFactory;
 import Model.DAO.VendedorDao;
 import Model.Entites.Departamento;
 import Model.Entites.Vendedor;
-import Model.Impl.VendedorDaoJdbc;
-import db.DB;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProgramaDAO {
