@@ -78,12 +78,80 @@ public class VendedorDaoJdbc implements VendedorDao {
 
 
     @Override
-    public void update(Vendedor vendedor) {
+    public void update(Vendedor vendedor) throws SQLException {
+
+        PreparedStatement ps = null;
+        con.setAutoCommit(false);
+
+
+        try {
+
+            ps = con.prepareStatement(
+                    "UPDATE vendedor SET nome = ?, Email = ?, dt_aniversario = ?, salario = ?, " +
+                            "departamento_id = ? " +
+                            "where id = ?");
+
+
+            ps.setString(1, vendedor.getNome());
+            ps.setString(2, vendedor.getEmail());
+            ps.setDate(3, new java.sql.Date(vendedor.getDtAniversario().getTime()));
+            ps.setDouble(4, vendedor.getSalario());
+            ps.setInt(5, vendedor.getDepartamento().getIdDepartamento()); //Navega pelo objeto ate chegar ao parametro
+            ps.setInt(6, vendedor.getIdVendedor());
+
+            int linhasAtualizadas = ps.executeUpdate();
+            con.commit();
+
+        } catch (SQLException e) {
+            try {
+                con.rollback();
+            } catch (SQLException rollbackException) {
+                e.addSuppressed(rollbackException);
+            }
+            throw new DbException(e.getMessage());
+        }
+
+        finally {
+            DB.closeStatment(ps);
+        }
 
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Integer id) throws SQLException {
+
+        PreparedStatement ps = null;
+        con.setAutoCommit(false);
+
+
+        try {
+
+            ps = con.prepareStatement("Delete from vendedor where id = ?");
+
+            ps.setInt(1,id);
+
+            int linhasDeletadas = ps.executeUpdate();
+
+            if (linhasDeletadas == 0) {
+                //throw new DbException("Erro ao deletar vendedor, Id inexistente");
+                System.out.println("Erro ao deletar vendedor, Id inexistente");
+            }else {
+                con.commit();
+                System.out.println("Vendedor excluído com sucesso.");
+            }
+
+        } catch (SQLException e) {
+            try {
+                con.rollback();
+            } catch (SQLException rollbackException) {
+                e.addSuppressed(rollbackException);
+            }
+            throw new DbException(e.getMessage());
+        }
+
+        finally {
+            DB.closeStatment(ps);
+        }
 
     }
 

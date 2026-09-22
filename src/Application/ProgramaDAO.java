@@ -43,5 +43,17 @@ public class ProgramaDAO {
         vendedorDao.insert(vendedorInsert);
         System.out.println("Vendedor inserido com sucesso, ID: " +  vendedorInsert.getIdVendedor());
 
+        System.out.println();
+        System.out.println("=========== Teste de Update ===========");
+        Vendedor vendedorUpdate = vendedorDao.findById(4);
+        vendedorUpdate.setNome("Martha Waine");
+        vendedorDao.update(vendedorUpdate);
+        System.out.println("Vendedor atualizado com sucesso: " +  vendedorUpdate);
+
+        System.out.println();
+        System.out.println("=========== Teste de Delete ===========");
+        vendedorDao.deleteById(21);
+        //System.out.println("Vendedor excluído com sucesso.");
+
     }
 }
