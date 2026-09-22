@@ -6,15 +6,18 @@ import Model.Entites.Vendedor;
 import Exception.DbException;
 import db.DB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ */
 public class VendedorDaoJdbc implements VendedorDao {
 
     Connection con;
@@ -24,9 +27,55 @@ public class VendedorDaoJdbc implements VendedorDao {
     }
 
     @Override
-    public void insert(Vendedor vendedor) {
+    public void insert(Vendedor vendedor) throws SQLException {
+
+
+        PreparedStatement ps = null;
+        con.setAutoCommit(false);
+
+
+        try {
+
+            ps = con.prepareStatement(
+                    "INSERT INTO vendedor"
+                            + "(nome, Email, dt_aniversario, salario, departamento_id)"
+                            + "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, vendedor.getNome());
+            ps.setString(2, vendedor.getEmail());
+            ps.setDate(3, new java.sql.Date(vendedor.getDtAniversario().getTime()));
+            ps.setDouble(4, vendedor.getSalario());
+            ps.setInt(5, vendedor.getDepartamento().getIdDepartamento()); //Navega pelo objeto ate chegar ao parametro
+
+            int linhasInseridas = ps.executeUpdate();
+
+            if (linhasInseridas > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        int id = rs.getInt(1);
+                        con.commit();
+                        vendedor.setIdVendedor(id);
+                    } else {
+                        con.rollback();
+                        throw new DbException("Erro ao obter o ID do vendedor inserido");
+                    }
+                }
+            } else {
+                con.rollback();
+                throw new DbException("Erro ao inserir vendedor");
+            }
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+
+        }
+
+        finally {
+            DB.closeStatment(ps);
+        }
 
     }
+
 
     @Override
     public void update(Vendedor vendedor) {
@@ -187,4 +236,5 @@ public class VendedorDaoJdbc implements VendedorDao {
         }
 
     }
+
 }

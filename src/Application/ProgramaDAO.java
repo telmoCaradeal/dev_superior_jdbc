@@ -5,11 +5,13 @@ import Model.DAO.VendedorDao;
 import Model.Entites.Departamento;
 import Model.Entites.Vendedor;
 
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public class ProgramaDAO {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         //Faz a conexão com o banco de dados
         VendedorDao vendedorDao = DaoFactory.createVendedorDao();
@@ -33,6 +35,13 @@ public class ProgramaDAO {
         for (Vendedor todosVendedor : listarTodosVendedores) {
             System.out.println(todosVendedor);
         }
+
+        System.out.println();
+        System.out.println("=========== Teste de Insert ===========");
+        Vendedor vendedorInsert =  new Vendedor(null, "Bernardo",
+                "bernardo.oliveira@gmail.com", new Date(), 1500.0, departamento);
+        vendedorDao.insert(vendedorInsert);
+        System.out.println("Vendedor inserido com sucesso, ID: " +  vendedorInsert.getIdVendedor());
 
     }
 }
