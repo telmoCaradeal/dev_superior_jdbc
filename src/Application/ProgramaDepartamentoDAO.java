@@ -1,6 +1,7 @@
 package Application;
 
 import Model.DAO.DaoFactory;
+import Model.DAO.DepartamentoDao;
 import Model.DAO.VendedorDao;
 import Model.Entites.Departamento;
 import Model.Entites.Vendedor;
@@ -9,12 +10,12 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-public class ProgramaDAO {
+public class ProgramaDepartamentoDAO {
 
     public static void main(String[] args) throws SQLException {
 
         //Faz a conexão com o banco de dados
-        VendedorDao vendedorDao = DaoFactory.createVendedorDao();
+        DepartamentoDao departamentoDao = DaoFactory.createDepartamentoDao();
 
         Vendedor vendedor = vendedorDao.findById(1);
         System.out.println("=========== Teste de FindById ===========");
