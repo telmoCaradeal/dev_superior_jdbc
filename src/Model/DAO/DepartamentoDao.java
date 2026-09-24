@@ -9,9 +9,9 @@ public interface DepartamentoDao {
 
     void insert(Departamento departamento) throws SQLException;
 
-    void update(Departamento departamento);
+    void update(Departamento departamento) throws SQLException;
 
-    void deleteById(Integer id);
+    void deleteById(Integer id) throws SQLException;
 
     Departamento findById(Integer id);
 

@@ -17,44 +17,54 @@ public class ProgramaDepartamentoDAO {
         //Faz a conexão com o banco de dados
         DepartamentoDao departamentoDao = DaoFactory.createDepartamentoDao();
 
-        Vendedor vendedor = vendedorDao.findById(1);
+        Departamento departamento = departamentoDao.findById(1);
         System.out.println("=========== Teste de FindById ===========");
-        System.out.println(vendedor);
-
-        System.out.println();
-        System.out.println("=========== Teste de FindByIdDepartamento ===========");
-        Departamento departamento = new Departamento(4, null);
-        List<Vendedor> listaVendedores = vendedorDao.findByDepartamento(departamento);
-        for (Vendedor vendedor1 : listaVendedores) {
-            System.out.println(vendedor1);
-        }
+        System.out.println(departamento);
 
         System.out.println();
         System.out.println("=========== Teste de FindAll ===========");
-
-        List<Vendedor> listarTodosVendedores = vendedorDao.findAll();
-        for (Vendedor todosVendedor : listarTodosVendedores) {
-            System.out.println(todosVendedor);
+        List<Departamento> list = departamentoDao.findAll();
+        for (Departamento d : list) {
+            System.out.println(d);
         }
 
         System.out.println();
         System.out.println("=========== Teste de Insert ===========");
-        Vendedor vendedorInsert =  new Vendedor(null, "Bernardo",
-                "bernardo.oliveira@gmail.com", new Date(), 1500.0, departamento);
-        vendedorDao.insert(vendedorInsert);
-        System.out.println("Vendedor inserido com sucesso, ID: " +  vendedorInsert.getIdVendedor());
+        Departamento insertDepartamento = new Departamento(null,"Negocios");
+        departamentoDao.insert(insertDepartamento);
+        System.out.println("Departamento inserido: " + insertDepartamento.getIdDepartamento());
+
+        System.out.println();
+        System.out.println("=========== Resultado Pós Insert ===========");
+        List<Departamento> listaPosIsert = departamentoDao.findAll();
+        for (Departamento d : listaPosIsert) {
+            System.out.println(d);
+        }
 
         System.out.println();
         System.out.println("=========== Teste de Update ===========");
-        Vendedor vendedorUpdate = vendedorDao.findById(4);
-        vendedorUpdate.setNome("Martha Waine");
-        vendedorDao.update(vendedorUpdate);
-        System.out.println("Vendedor atualizado com sucesso: " +  vendedorUpdate);
+        Departamento updateDepartamento = new Departamento(2,"Eletronicos");
+        departamentoDao.update(updateDepartamento);
+        System.out.println("Departamento atualizado: " + updateDepartamento.getIdDepartamento() + "," + updateDepartamento.getName());
+
+        System.out.println();
+        System.out.println("=========== Resultado Pós Update ===========");
+        List<Departamento> listaPosUpdate = departamentoDao.findAll();
+        for (Departamento d : listaPosUpdate) {
+            System.out.println(d);
+        }
+
 
         System.out.println();
         System.out.println("=========== Teste de Delete ===========");
-        vendedorDao.deleteById(21);
-        //System.out.println("Vendedor excluído com sucesso.");
+        departamentoDao.deleteById(7);
+
+        System.out.println();
+        System.out.println("=========== Resultado Pós Delete ===========");
+        List<Departamento> listaPosDelete = departamentoDao.findAll();
+        for (Departamento d : listaPosDelete) {
+            System.out.println(d);
+        }
 
     }
 }
